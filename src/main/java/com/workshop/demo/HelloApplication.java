@@ -1,5 +1,7 @@
-package com.workshop.kimer;
+package com.workshop.demo;
 
+import com.workshop.kimer.LoginController;
+import com.workshop.model.service.UsuarioService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,14 +16,16 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/workshop/kimer/login.fxml"));
             ScrollPane scrollPane = loader.load();
             scrollPane.setFitToWidth(true);
             scrollPane.setFitToHeight(true);
+            LoginController controller = loader.getController();
+            controller.setUsuarioService(new UsuarioService());
 
             mainScene = new Scene(scrollPane);
             primaryStage.setScene(mainScene);
-            primaryStage.setTitle("Sample JavaFX application");
+            primaryStage.setTitle("Kimer System");
             primaryStage.show();
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());

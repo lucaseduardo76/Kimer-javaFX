@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.MainViewController">
+    <MenuBar fx:id="menuBar">
+      <Menu mnemonicParsing="false" text="Home">
+         <items>
+            <MenuItem fx:id="btHome" mnemonicParsing="false" onAction="#onBtHome" text="Home" />
+         </items></Menu>
+        <Menu mnemonicParsing="false" text="Motos">
+            <MenuItem fx:id="btListaMarca" mnemonicParsing="false" onAction="#onBtListaMarca" text="Lista de Marca" />
+            <MenuItem fx:id="btListaModelo" mnemonicParsing="false" onAction="#onBtListaModelo" text="Lista de Modelos" />
+            <MenuItem fx:id="btListaMotoCliente" mnemonicParsing="false" onAction="#onBtListaMotoCliente" text="Motos de Cliente" />
+        </Menu>
+        <Menu mnemonicParsing="false" text="Estoque">
+            <MenuItem fx:id="btListaPecasCadastrada" mnemonicParsing="false" onAction="#onBtListaPecasCadastrada" text="Lista de Peças Cadastrada" />
+            <MenuItem fx:id="btEstoque" mnemonicParsing="false" onAction="#onBtEstoque" text="Estoque" />
+        </Menu>
+        <Menu mnemonicParsing="false" text="Serviço">
+            <MenuItem fx:id="btOrcamento" mnemonicParsing="false" onAction="#onBtOrcamento" text="Criar Orçamento" />
+        </Menu>
+    </MenuBar>
+    <children>
+    <!-- Área para trocar conteúdo dinamicamente -->
+    <Pane fx:id="contentArea" VBox.vgrow="ALWAYS">
+        <ImageView fitHeight="700" fitWidth="1150" pickOnBounds="true" preserveRatio="false">
+            <Image url="@../../../imgs/Banner-moto.png" />
+        </ImageView>
+    </Pane>
+    </children>
+</VBox>
