@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="454.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaClientesController">
+<VBox prefHeight="700.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaClientesController">
     <children>
         <Label text="Lista de Clientes Cadastrados">
             <font>
@@ -24,13 +24,13 @@
                 <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
             </items>
         </ToolBar>
-        <TableView fx:id="tableViewClientes" maxHeight="500.0" maxWidth="1000.0" prefHeight="383.0" prefWidth="769.0">
+        <TableView fx:id="tableViewClientes" prefHeight="633.0" prefWidth="772.0">
             <columns>
                 <TableColumn fx:id="tableColumnId" maxWidth="500.0" prefWidth="50.0" text="id" />
                 <TableColumn fx:id="tableColumnName" minWidth="68.0" prefWidth="150.0" text="nome" />
-            <TableColumn fx:id="tableColumnCpf" minWidth="68.0" prefWidth="150.0" text="cpf" />
-            <TableColumn fx:id="tableColumnEmail" minWidth="68.0" prefWidth="150.0" text="email" />
-            <TableColumn fx:id="tableColumnTelefone" maxWidth="200.0" minWidth="68.0" prefWidth="150.0" text="telefone" />
+                <TableColumn fx:id="tableColumnCpf" minWidth="68.0" prefWidth="150.0" text="cpf" />
+                <TableColumn fx:id="tableColumnEmail" minWidth="68.0" prefWidth="150.0" text="email" />
+                <TableColumn fx:id="tableColumnTelefone" maxWidth="200.0" minWidth="68.0" prefWidth="150.0" text="telefone" />
                 <TableColumn fx:id="tableColumnEDIT" minWidth="43.0" prefWidth="60.0" text="editar" />
                 <TableColumn fx:id="tableColumnDELETE" minWidth="49.0" prefWidth="60.0" text="deletar" />
 

@@ -31,6 +31,9 @@ import java.util.ResourceBundle;
 
 public class ListaClientesController implements Initializable, DataChangeListener {
 
+    private Boolean busca;
+
+    private List<Cliente> listaBusca;
 
     private ClienteService clienteService;
 
@@ -88,8 +91,13 @@ public class ListaClientesController implements Initializable, DataChangeListene
     public void updateTableView() {
         if(clienteService == null)
             throw new IllegalStateException("Marca service is null");
+        List<Cliente> list;
 
-        List<Cliente> list = clienteService.findAll();
+        if(!busca) {
+            list = clienteService.findAll();
+        }else{
+            list = listaBusca;
+        }
         ObservableList<Cliente> obsList = FXCollections.observableArrayList(list);
         tableViewClientes.setItems(obsList);
         initEditButtons();

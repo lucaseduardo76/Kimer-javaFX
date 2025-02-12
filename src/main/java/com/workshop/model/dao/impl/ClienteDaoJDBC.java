@@ -84,6 +84,35 @@ public class ClienteDaoJDBC implements ClienteDao {
     }
 
     @Override
+    public Cliente findByCpf(String cpf) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM cliente WHERE cpf = ?");
+            st.setString(1, cpf);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                Cliente obj = new Cliente();
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setEmail(rs.getString("email"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCpf(rs.getString("cpf"));
+                return obj;
+            }
+            return null;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    @Override
     public void insert(Cliente obj) {
         PreparedStatement st = null;
         try {

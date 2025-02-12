@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="454.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaClientesController">
+<VBox prefHeight="700.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaClientesController">
     <children>
         <Label text="Lista de Clientes Cadastrados">
             <font>
@@ -21,10 +21,22 @@
         </Label>
         <ToolBar prefHeight="40.0" prefWidth="200.0">
             <items>
-                <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
+                <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Novo" />
+            <ToolBar prefHeight="40.0" prefWidth="707.0">
+              <items>
+                <Button mnemonicParsing="false" text="Buscar por  Nome" />
+                <Button mnemonicParsing="false" text="Buscar por CPF" />
+              </items>
+               <padding>
+                  <Insets left="490.0" />
+               </padding>
+            </ToolBar>
             </items>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
         </ToolBar>
-        <TableView fx:id="tableViewClientes" prefHeight="384.0" prefWidth="787.0">
+        <TableView fx:id="tableViewClientes" prefHeight="633.0" prefWidth="772.0">
             <columns>
                 <TableColumn fx:id="tableColumnId" maxWidth="500.0" prefWidth="50.0" text="id" />
                 <TableColumn fx:id="tableColumnName" minWidth="68.0" prefWidth="150.0" text="nome" />
@@ -34,7 +46,7 @@
                 <TableColumn fx:id="tableColumnEDIT" minWidth="43.0" prefWidth="60.0" text="editar" />
                 <TableColumn fx:id="tableColumnDELETE" minWidth="49.0" prefWidth="60.0" text="deletar" />
 
-            </columns>
+                        </columns>
         </TableView>
     </children>
 </VBox>

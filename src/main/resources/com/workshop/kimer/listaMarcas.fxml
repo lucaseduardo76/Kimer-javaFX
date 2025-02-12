@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="454.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaMarcasController">
+<VBox prefHeight="700.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaMarcasController">
     <children>
         <Label text="Lista de Marcas Cadastradas">
             <font>
@@ -24,12 +24,12 @@
                 <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
             </items>
         </ToolBar>
-        <TableView fx:id="tableViewMarcas" prefHeight="200.0" prefWidth="200.0">
+        <TableView fx:id="tableViewMarcas" prefHeight="633.0" prefWidth="200.0">
             <columns>
                 <TableColumn fx:id="tableColumnId" maxWidth="500.0" prefWidth="150.0" text="id" />
                 <TableColumn fx:id="tableColumnName" minWidth="68.0" prefWidth="200.0" text="nome" />
-                <TableColumn fx:id="tableColumnEDIT" minWidth="43.0" prefWidth="100.0" text="editar" />
-                <TableColumn fx:id="tableColumnDELETE" minWidth="49.0" prefWidth="100.0" text="deletar" />
+                <TableColumn fx:id="tableColumnEDIT" minWidth="43.0" prefWidth="138.0" text="editar" />
+                <TableColumn fx:id="tableColumnDELETE" minWidth="49.0" prefWidth="125.0" text="deletar" />
 
             </columns>
         </TableView>

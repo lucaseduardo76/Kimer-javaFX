@@ -33,4 +33,8 @@ public class ClienteService {
     public List<Cliente> findAll() {
         return clienteDao.findAll();
     }
+
+    public Cliente findByCpf(String cpf) {
+        return clienteDao.findByCpf(cpf);
+    }
 }

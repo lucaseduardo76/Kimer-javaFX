@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="454.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaModelosController">
+<VBox prefHeight="700.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaModelosController">
     <children>
         <Label text="Lista de Modelos de Moto Cadastradas">
             <font>
@@ -24,7 +24,7 @@
                 <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
             </items>
         </ToolBar>
-        <TableView fx:id="tableViewModelos" prefHeight="200.0" prefWidth="200.0">
+        <TableView fx:id="tableViewModelos" prefHeight="633.0" prefWidth="210.0">
             <columns>
                 <TableColumn fx:id="tableColumnId" maxWidth="500.0" prefWidth="50.0" text="id" />
                 <TableColumn fx:id="tableColumnModelo" minWidth="68.0" prefWidth="150.0" text="modelo" />
