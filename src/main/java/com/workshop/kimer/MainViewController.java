@@ -2,6 +2,7 @@ package com.workshop.kimer;
 
 import com.workshop.demo.HelloApplication;
 import com.workshop.kimer.util.Alerts;
+import com.workshop.model.service.ClienteService;
 import com.workshop.model.service.MarcaService;
 import com.workshop.model.service.ModeloService;
 import javafx.fxml.FXML;
@@ -20,6 +21,9 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class MainViewController implements Initializable {
+
+    @FXML
+    private MenuItem btListaClientes;
 
     @FXML
     private MenuItem btListaMarca;
@@ -53,6 +57,14 @@ public class MainViewController implements Initializable {
     private void onBtListaMarca() {
         loadView("/com/workshop/kimer/listaMarcas.fxml", (ListaMarcasController listaController) -> {
             listaController.setListaMarca(new MarcaService());
+            listaController.updateTableView();
+        });
+    }
+
+    @FXML
+    private void onBtListaClientes() {
+        loadView("/com/workshop/kimer/listaClientes.fxml", (ListaClientesController listaController) -> {
+            listaController.setClienteService(new ClienteService());
             listaController.updateTableView();
         });
     }

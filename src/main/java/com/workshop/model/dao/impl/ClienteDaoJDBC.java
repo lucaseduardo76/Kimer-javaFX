@@ -3,11 +3,13 @@ package com.workshop.model.dao.impl;
 import com.workshop.db.DB;
 import com.workshop.db.DbException;
 import com.workshop.db.DbIntegrityException;
+import com.workshop.kimer.util.Utils;
 import com.workshop.model.dao.ClienteDao;
 import com.workshop.model.dao.DaoFactory;
 import com.workshop.model.dao.MarcaDao;
 import com.workshop.model.entities.Cliente;
 import com.workshop.model.entities.Modelo;
+import jdk.jshell.execution.Util;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -66,8 +68,8 @@ public class ClienteDaoJDBC implements ClienteDao {
                 obj.setId(rs.getInt("id"));
                 obj.setNome(rs.getString("nome"));
                 obj.setEmail(rs.getString("email"));
-                obj.setTelefone(rs.getString("telefone"));
-                obj.setCpf(rs.getString("cpf"));
+                obj.setTelefone(Utils.formatarTelefone(rs.getString("telefone")));
+                obj.setCpf(Utils.formatarCPF(rs.getString("cpf")));
                 list.add(obj);
             }
             return list;

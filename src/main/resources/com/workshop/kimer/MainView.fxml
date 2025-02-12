@@ -14,6 +14,11 @@
          <items>
             <MenuItem fx:id="btHome" mnemonicParsing="false" onAction="#onBtHome" text="Home" />
          </items></Menu>
+      <Menu mnemonicParsing="false" text="Clientes">
+         <items>
+            <MenuItem fx:id="btListaClientes" mnemonicParsing="false" onAction="#onBtListaClientes" text="Clientes" />
+         </items>
+      </Menu>
         <Menu mnemonicParsing="false" text="Motos">
             <MenuItem fx:id="btListaMarca" mnemonicParsing="false" onAction="#onBtListaMarca" text="Lista de Marca" />
             <MenuItem fx:id="btListaModelo" mnemonicParsing="false" onAction="#onBtListaModelo" text="Lista de Modelos" />
