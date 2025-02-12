@@ -3,6 +3,7 @@ package com.workshop.model.dao;
 
 import com.workshop.db.DB;
 import com.workshop.model.dao.impl.MarcaDaoJDBC;
+import com.workshop.model.dao.impl.ModeloDaoJDBC;
 import com.workshop.model.dao.impl.UsuarioDaoJDBC;
 
 public class DaoFactory {
@@ -13,5 +14,9 @@ public class DaoFactory {
 
 	public static MarcaDao createMarcaDao() {
 		return new MarcaDaoJDBC(DB.getConnection());
+	}
+
+	public static ModeloDao createModeloDao() {
+		return new ModeloDaoJDBC(DB.getConnection());
 	}
 }

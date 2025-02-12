@@ -6,7 +6,8 @@ import com.workshop.kimer.listeners.DataChangeListener;
 import com.workshop.kimer.util.Alerts;
 import com.workshop.kimer.util.Utils;
 import com.workshop.model.entities.Marca;
-import com.workshop.model.service.MarcaService;
+import com.workshop.model.entities.Modelo;
+import com.workshop.model.service.ModeloService;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,31 +28,37 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ListaMarcasController implements Initializable, DataChangeListener {
+public class ListaModelosController implements Initializable, DataChangeListener {
 
-    private MarcaService marcaService;
-
-    @FXML
-    private TableView<Marca> tableViewMarcas;
+    private ModeloService modeloService;
 
     @FXML
-    private TableColumn<Marca, Integer> tableColumnId;
+    private TableView<Modelo> tableViewModelos;
 
     @FXML
-    private TableColumn<Marca, String> tableColumnName;
+    private TableColumn<Modelo, Integer> tableColumnId;
 
     @FXML
-    private TableColumn<Marca, Marca> tableColumnEDIT;
+    private TableColumn<Modelo, String> tableColumnModelo;
 
     @FXML
-    private TableColumn<Marca, Marca> tableColumnDELETE;
+    private TableColumn<Modelo, String> tableColumnCilindrada;
+
+    @FXML
+    private TableColumn<Modelo, String> tableColumnMarca;
+
+    @FXML
+    private TableColumn<Modelo, Modelo> tableColumnEDIT;
+
+    @FXML
+    private TableColumn<Modelo, Modelo> tableColumnDELETE;
 
     @FXML
     private Button btNew;
 
     @FXML
     public void onBtNewAction(ActionEvent event) {
-        Marca obj = new Marca();
+        Modelo obj = new Modelo();
         createDialogForm(obj, Utils.currentStage(event));
     }
 
@@ -62,33 +69,35 @@ public class ListaMarcasController implements Initializable, DataChangeListener 
 
     private void initializeNodes() {
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnName.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tableColumnModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        tableColumnCilindrada.setCellValueFactory(new PropertyValueFactory<>("cilindrada"));
+        tableColumnMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
 
         Stage stage = (Stage) HelloApplication.getMainScene().getWindow();
-        tableViewMarcas.prefHeightProperty().bind(stage.heightProperty());
+        tableViewModelos.prefHeightProperty().bind(stage.heightProperty());
 
 
     }
 
     public void updateTableView() {
-        if(marcaService == null)
-            throw new IllegalStateException("Marca service is null");
+        if(modeloService == null)
+            throw new IllegalStateException("Modelo service is null");
 
-        List<Marca> list = marcaService.findAll();
-        ObservableList<Marca> obsList = FXCollections.observableArrayList(list);
-        tableViewMarcas.setItems(obsList);
+        List<Modelo> list = modeloService.findAll();
+        ObservableList<Modelo> obsList = FXCollections.observableArrayList(list);
+        tableViewModelos.setItems(obsList);
         initEditButtons();
         deleteButtons();
     }
 
 
-    private void createDialogForm(Marca obj, Stage parentStage) {
+    private void createDialogForm(Modelo obj, Stage parentStage) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/workshop/kimer/MarcaForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/workshop/kimer/ModeloForm.fxml"));
             Pane pane = (Pane) loader.load();
 
-            MarcaFormController controller = loader.getController();
-            controller.setMarca(obj);
+            ModeloFormController controller = loader.getController();
+            controller.setModelo(obj);
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
 
@@ -114,11 +123,11 @@ public class ListaMarcasController implements Initializable, DataChangeListener 
 
     private void initEditButtons() {
         tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnEDIT.setCellFactory(param -> new TableCell<Marca, Marca>() {
+        tableColumnEDIT.setCellFactory(param -> new TableCell<Modelo, Modelo>() {
             private final Button button = new Button("edit");
 
             @Override
-            protected void updateItem(Marca obj, boolean empty) {
+            protected void updateItem(Modelo obj, boolean empty) {
                 super.updateItem(obj, empty);
 
                 if (obj == null) {
@@ -139,11 +148,11 @@ public class ListaMarcasController implements Initializable, DataChangeListener 
 
     private void deleteButtons() {
         tableColumnDELETE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnDELETE.setCellFactory(param -> new TableCell<Marca, Marca>() {
+        tableColumnDELETE.setCellFactory(param -> new TableCell<Modelo, Modelo>() {
             private final Button button = new Button("Delete");
 
             @Override
-            protected void updateItem(Marca obj, boolean empty) {
+            protected void updateItem(Modelo obj, boolean empty) {
                 super.updateItem(obj, empty);
 
                 if (obj == null) {
@@ -158,11 +167,11 @@ public class ListaMarcasController implements Initializable, DataChangeListener 
         });
     }
 
-    private void deleteAction(Marca obj) {
+    private void deleteAction(Modelo obj) {
         try {
             Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
             if(result.isPresent() && result.get() == ButtonType.OK){
-                marcaService.delete(obj);
+                modeloService.delete(obj);
             }
             updateTableView();
 
@@ -172,8 +181,8 @@ public class ListaMarcasController implements Initializable, DataChangeListener 
 
     }
 
-    public void setListaMarca(MarcaService marcaService) {
-        this.marcaService = marcaService;
+    public void setModeloService(ModeloService modeloService) {
+        this.modeloService = modeloService;
     }
 
 

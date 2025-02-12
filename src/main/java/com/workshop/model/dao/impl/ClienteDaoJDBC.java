@@ -3,34 +3,40 @@ package com.workshop.model.dao.impl;
 import com.workshop.db.DB;
 import com.workshop.db.DbException;
 import com.workshop.db.DbIntegrityException;
-import com.workshop.kimer.util.Utils;
+import com.workshop.model.dao.ClienteDao;
+import com.workshop.model.dao.DaoFactory;
 import com.workshop.model.dao.MarcaDao;
-import com.workshop.model.entities.Marca;
+import com.workshop.model.entities.Cliente;
+import com.workshop.model.entities.Modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MarcaDaoJDBC implements MarcaDao {
-    private Connection conn;
+public class ClienteDaoJDBC implements ClienteDao {
 
-    public MarcaDaoJDBC(Connection conn) {
+    private final Connection conn;
+
+    public ClienteDaoJDBC(Connection conn) {
         this.conn = conn;
     }
 
     @Override
-    public Marca findById(Integer id) {
+    public Cliente findById(Integer id) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT * FROM marca WHERE Id = ?");
+                    "SELECT * FROM cliente WHERE Id = ?");
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                Marca obj = new Marca();
-                obj.setId(rs.getInt("Id"));
-                obj.setNome(rs.getString("Nome"));
+                Cliente obj = new Cliente();
+                obj.setId(id);
+                obj.setNome(rs.getString("nome"));
+                obj.setEmail(rs.getString("email"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCpf(rs.getString("cpf"));
                 return obj;
             }
             return null;
@@ -45,20 +51,23 @@ public class MarcaDaoJDBC implements MarcaDao {
     }
 
     @Override
-    public List<Marca> findAll() {
+    public List<Cliente> findAll() {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT * FROM marca ORDER BY id");
+                    "SELECT * FROM cliente ORDER BY id");
             rs = st.executeQuery();
 
-            List<Marca> list = new ArrayList<>();
+            List<Cliente> list = new ArrayList<>();
 
             while (rs.next()) {
-                Marca obj = new Marca();
-                obj.setId(rs.getInt("Id"));
-                obj.setNome(Utils.capitalizeWords(rs.getString("Nome")));
+                Cliente obj = new Cliente();
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setEmail(rs.getString("email"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCpf(rs.getString("cpf"));
                 list.add(obj);
             }
             return list;
@@ -73,43 +82,20 @@ public class MarcaDaoJDBC implements MarcaDao {
     }
 
     @Override
-    public Marca findByName(String name) {
-        PreparedStatement st = null;
-        ResultSet rs = null;
-        try {
-            st = conn.prepareStatement(
-                    "SELECT * FROM marca WHERE Nome = ?");
-            st.setString(1, name);
-            rs = st.executeQuery();
-            if (rs.next()) {
-                Marca obj = new Marca();
-                obj.setId(rs.getInt("Id"));
-                obj.setNome(rs.getString("Nome"));
-                return obj;
-            }
-            return null;
-        }
-        catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        }
-        finally {
-            DB.closeStatement(st);
-            DB.closeResultSet(rs);
-        }
-    }
-
-    @Override
-    public void insert(Marca obj) {
+    public void insert(Cliente obj) {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO marca " +
-                            "(Nome) " +
+                    "INSERT INTO cliente " +
+                            "(Nome, cpf, email, telefone) " +
                             "VALUES " +
-                            "(?)",
+                            "(?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
 
             st.setString(1, obj.getNome());
+            st.setString(2, obj.getCpf());
+            st.setString(3, obj.getEmail());
+            st.setString(4, obj.getTelefone());
 
             int rowsAffected = st.executeUpdate();
 
@@ -133,16 +119,23 @@ public class MarcaDaoJDBC implements MarcaDao {
     }
 
     @Override
-    public void update(Marca obj) {
+    public void update(Cliente obj) {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "UPDATE marca " +
-                            "SET Nome = ? " +
-                            "WHERE Id = ?");
+                    "UPDATE cliente " +
+                            "SET nome = ?, " +
+                            "cpf = ?, " +
+                            "email = ?, " +
+                            "telefone = ? " +
+                            "WHERE id = ?"
+            );
 
             st.setString(1, obj.getNome());
-            st.setInt(2, obj.getId());
+            st.setString(2, obj.getCpf());
+            st.setString(3, obj.getEmail());
+            st.setString(4, obj.getTelefone());
+            st.setInt(5, obj.getId());
 
             st.executeUpdate();
         }
@@ -159,7 +152,7 @@ public class MarcaDaoJDBC implements MarcaDao {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "DELETE FROM marca WHERE Id = ?");
+                    "DELETE FROM cliente WHERE Id = ?");
 
             st.setInt(1, id);
             st.executeUpdate();
@@ -171,4 +164,5 @@ public class MarcaDaoJDBC implements MarcaDao {
             DB.closeStatement(st);
         }
     }
+
 }

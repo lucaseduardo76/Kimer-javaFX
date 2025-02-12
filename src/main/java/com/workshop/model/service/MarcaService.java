@@ -1,13 +1,10 @@
 package com.workshop.model.service;
 
-import com.workshop.kimer.util.Utils;
 import com.workshop.model.dao.DaoFactory;
 import com.workshop.model.dao.MarcaDao;
 import com.workshop.model.entities.Marca;
-import jdk.jshell.execution.Util;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MarcaService {
 
@@ -30,6 +27,10 @@ public class MarcaService {
 
     public Marca findById(int id) {
         return marcaDao.findById(id);
+    }
+
+    public Marca findByName(String name) {
+        return marcaDao.findByName(name);
     }
 
     public List<Marca> findAll() {

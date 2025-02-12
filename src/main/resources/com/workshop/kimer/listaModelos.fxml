@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="454.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaModelosController">
+    <children>
+        <Label text="Lista de Modelos de Moto Cadastradas">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+            <padding>
+                <Insets left="10.0" top="10.0" />
+            </padding>
+        </Label>
+        <ToolBar prefHeight="40.0" prefWidth="200.0">
+            <items>
+                <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
+            </items>
+        </ToolBar>
+        <TableView fx:id="tableViewModelos" prefHeight="200.0" prefWidth="200.0">
+            <columns>
+                <TableColumn fx:id="tableColumnId" maxWidth="500.0" prefWidth="50.0" text="id" />
+                <TableColumn fx:id="tableColumnModelo" minWidth="68.0" prefWidth="150.0" text="modelo" />
+            <TableColumn fx:id="tableColumnCilindrada" minWidth="68.0" prefWidth="150.0" text="cilindrada" />
+            <TableColumn fx:id="tableColumnMarca" maxWidth="200.0" minWidth="68.0" prefWidth="150.0" text="marca" />
+                <TableColumn fx:id="tableColumnEDIT" minWidth="43.0" prefWidth="60.0" text="editar" />
+                <TableColumn fx:id="tableColumnDELETE" minWidth="49.0" prefWidth="60.0" text="deletar" />
+
+            </columns>
+        </TableView>
+    </children>
+</VBox>

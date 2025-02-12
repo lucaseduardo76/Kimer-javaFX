@@ -3,18 +3,15 @@ package com.workshop.kimer;
 import com.workshop.demo.HelloApplication;
 import com.workshop.kimer.util.Alerts;
 import com.workshop.model.service.MarcaService;
+import com.workshop.model.service.ModeloService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -55,7 +52,7 @@ public class MainViewController implements Initializable {
     @FXML
     private void onBtListaMarca() {
         loadView("/com/workshop/kimer/listaMarcas.fxml", (ListaMarcasController listaController) -> {
-            listaController.setMarcaService(new MarcaService());
+            listaController.setListaMarca(new MarcaService());
             listaController.updateTableView();
         });
     }
@@ -67,7 +64,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void onBtListaModelo() {
-        // Implementação do método
+        loadView("/com/workshop/kimer/listaModelos.fxml", (ListaModelosController listaController) -> {
+            listaController.setModeloService(new ModeloService());
+            listaController.updateTableView();
+        });
     }
 
     @FXML
@@ -114,6 +114,27 @@ public class MainViewController implements Initializable {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
+
+//    private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+//        try {
+//            Node newView = loader.load();
+//            contentArea.getChildren().clear();
+//            contentArea.getChildren().add(newView);
+//
+//            // Obtendo o controlador
+//            T controller = loader.getController();
+//            if (controller != null) {
+//                initializingAction.accept(controller);
+//            } else {
+//                Alerts.showAlert("Error", "Controller is null", "Não foi possível carregar o controlador para " + absoluteName, Alert.AlertType.ERROR);
+//            }
+//
+//        } catch (IOException e) {
+//            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+//        }
+//    }
+
 
     private synchronized void loadFullView(String absoluteName) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));

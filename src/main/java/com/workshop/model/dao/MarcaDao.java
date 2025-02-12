@@ -13,4 +13,6 @@ public interface MarcaDao {
 	void deleteById(Integer id);
 	Marca findById(Integer id);
 	List<Marca> findAll();
+
+	Marca findByName(String name);
 }
