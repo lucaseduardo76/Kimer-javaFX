@@ -117,6 +117,38 @@ public class MotoClienteJDBC implements MotoClienteDao {
     }
 
     @Override
+    public List<MotoCliente> findByPlaca(String placa) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM moto_cliente where placa LIKE ? ORDER BY id");
+            st.setString(1, placa+"%");
+            rs = st.executeQuery();
+
+            List<MotoCliente> list = new ArrayList<>();
+
+            while (rs.next()) {
+                MotoCliente obj = new MotoCliente();
+                obj.setId(rs.getInt("id"));
+                obj.setPlaca(rs.getString("placa"));
+                obj.setAno(rs.getInt("ano"));
+                obj.setModelo(modeloService.findById(rs.getInt("modelo_id")));
+                obj.setCliente(clienteService.findById(rs.getInt("cliente_id")));
+                list.add(obj);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    @Override
     public void insert(MotoCliente obj) {
         PreparedStatement st = null;
         try {

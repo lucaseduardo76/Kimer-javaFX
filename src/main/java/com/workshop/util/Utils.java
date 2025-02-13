@@ -74,12 +74,23 @@ public class Utils {
 
 
     public static String formatarPlaca(String placa) {
-        if (placa == null || placa.length() != 7) {
-            throw new IllegalArgumentException("Placa Inválida");
-        }
+        if (placa == null) return null;
 
-        // Converte para maiúsculas e insere o hífen após os 3 primeiros caracteres
-        return placa.substring(0, 3).toUpperCase() + "-" + placa.substring(3);
+
+        placa = placa.replaceAll("\\s+", "").toUpperCase();
+
+
+        String padraoAntigo = "^[A-Z]{3}\\d{4}$";
+        String padraoNovo = "^[A-Z]{3}\\d[A-Z]\\d{2}$";
+
+
+        if (placa.matches(padraoAntigo)) {
+            return placa.substring(0, 3) + "-" + placa.substring(3);
+        } else if (placa.matches(padraoNovo)) {
+            return placa;
+        } else {
+            throw new IllegalArgumentException("Placa inválida: " + placa);
+        }
     }
 
 

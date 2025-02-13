@@ -62,4 +62,8 @@ public class MotoClienteService {
         });
         return motoClientes;
     }
+
+    public List<MotoCliente> findByPlaca(String placa) {
+        return motoClienteDao.findByPlaca(placa);
+    }
 }

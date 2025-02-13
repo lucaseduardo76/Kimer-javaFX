@@ -81,6 +81,9 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
     private Button btBuscaCpf;
 
     @FXML
+    private Button btBuscaPlaca;
+
+    @FXML
     private Button btBuscaNome;
 
     @FXML
@@ -105,6 +108,16 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
     public void onBtBuscaNome(ActionEvent event) {
         Cliente obj = new Cliente();
         createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaMotoNomeForm.fxml", (BuscaMotoNomeController controller) -> {
+            controller.subscribeController(this);
+            controller.setMotoClienteService(motoClienteService);
+            controller.subscribeDataChangeListener(this);
+        });
+    }
+
+    @FXML
+    public void onBtBuscaPlaca(ActionEvent event) {
+        Cliente obj = new Cliente();
+        createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaMotoPlacaForm.fxml", (BuscaMotoPlacaController controller) -> {
             controller.subscribeController(this);
             controller.setMotoClienteService(motoClienteService);
             controller.subscribeDataChangeListener(this);
@@ -173,7 +186,7 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
         List<MotoClienteDTO> listDTO = list.stream().map(moto ->{
                 MotoClienteDTO dto = new MotoClienteDTO();
                 dto.setId(moto.getId());
-                dto.setPlaca(moto.getPlaca());
+                dto.setPlaca(Utils.formatarPlaca(moto.getPlaca()));
                 dto.setAno(moto.getAno());
                 dto.setModelo(moto.getModelo());
                 dto.setDono(moto.getCliente());
@@ -209,7 +222,7 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
 
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Enter Department data");
+            dialogStage.setTitle("Enter data");
             dialogStage.setScene(new Scene(pane));
             dialogStage.setResizable(false);
             dialogStage.initOwner(parentStage);
@@ -220,9 +233,6 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
-
-
 
     @Override
     public void onDataChange() {

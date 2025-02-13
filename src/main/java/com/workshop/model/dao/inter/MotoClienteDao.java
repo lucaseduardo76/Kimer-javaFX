@@ -13,4 +13,6 @@ public interface MotoClienteDao {
     List<com.workshop.model.entities.MotoCliente> findAll();
 
     List<MotoCliente> findByClienteId(int id);
+
+    List<MotoCliente> findByPlaca(String placa);
 }
