@@ -1,7 +1,7 @@
 package com.workshop.model.service;
 
-import com.workshop.model.dao.DaoFactory;
-import com.workshop.model.dao.MarcaDao;
+import com.workshop.model.dao.factory.DaoFactory;
+import com.workshop.model.dao.inter.MarcaDao;
 import com.workshop.model.entities.Marca;
 
 import java.util.List;

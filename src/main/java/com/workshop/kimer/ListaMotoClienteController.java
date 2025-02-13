@@ -3,10 +3,15 @@ package com.workshop.kimer;
 import com.workshop.db.DbIntegrityException;
 import com.workshop.demo.HelloApplication;
 import com.workshop.listeners.DataChangeListener;
+import com.workshop.model.Dto.MotoClienteDTO;
+import com.workshop.model.entities.Cliente;
+import com.workshop.model.entities.Marca;
+import com.workshop.model.entities.Modelo;
+import com.workshop.model.entities.MotoCliente;
+import com.workshop.model.service.ClienteService;
+import com.workshop.model.service.MotoClienteService;
 import com.workshop.util.Alerts;
 import com.workshop.util.Utils;
-import com.workshop.model.entities.Cliente;
-import com.workshop.model.service.ClienteService;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,49 +25,56 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-public class ListaClientesController implements Initializable, DataChangeListener {
+@Setter
+public class ListaMotoClienteController implements Initializable, DataChangeListener {
 
     private Boolean busca;
 
-    private List<Cliente> listaBusca;
+    private List<MotoCliente> listaBusca;
 
-    private ClienteService clienteService;
+    @Setter
+    private MotoClienteService motoClienteService;
 
-    public ListaClientesController() {
+    public ListaMotoClienteController() {
         this.busca = false;
     }
 
     @FXML
-    private TableView<Cliente> tableViewClientes;
+    private TableView<MotoClienteDTO> tableViewClientes;
 
     @FXML
-    private TableColumn<Cliente, Integer> tableColumnId;
+    private TableColumn<MotoClienteDTO, Integer> tableColumnId;
 
     @FXML
-    private TableColumn<Cliente, String> tableColumnName;
+    private TableColumn<MotoClienteDTO, String> tableColumnPlaca;
 
     @FXML
-    private TableColumn<Cliente, String> tableColumnCpf;
+    private TableColumn<MotoClienteDTO, String> tableColumnAno;
 
     @FXML
-    private TableColumn<Cliente, String> tableColumnEmail;
+    private TableColumn<MotoClienteDTO, Modelo> tableColumnModelo;
 
     @FXML
-    private TableColumn<Cliente, String> tableColumnTelefone;
+    private TableColumn<MotoClienteDTO, Marca> tableColumnMarca;
 
     @FXML
-    private TableColumn<Cliente, Cliente> tableColumnEDIT;
+    private TableColumn<MotoClienteDTO, Cliente> tableColumnDono;
 
     @FXML
-    private TableColumn<Cliente, Cliente> tableColumnDELETE;
+    private TableColumn<MotoClienteDTO, MotoClienteDTO> tableColumnEDIT;
+
+    @FXML
+    private TableColumn<MotoClienteDTO, MotoClienteDTO> tableColumnDELETE;
 
     @FXML
     private Button btNew;
@@ -78,42 +90,34 @@ public class ListaClientesController implements Initializable, DataChangeListene
 
     @FXML
     public void onBtNewAction(ActionEvent event) {
-        Cliente obj = new Cliente();
+        MotoClienteDTO obj = MotoClienteDTO.builder().build();
         createDialogForm(obj, Utils.currentStage(event), "/com/workshop/kimer/ClienteForm.fxml");
     }
-    @FXML
-    public void onBtBuscaCpf(ActionEvent event) {
-        Cliente obj = new Cliente();
-        createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaCPFForm.fxml", (BuscaCpfForm controller) -> {
-            controller.subscribeController(this);
-            controller.setClienteService(clienteService);
-            controller.subscribeDataChangeListener(this);
-        });
-    }
-
-    @FXML
-    public void onBtBuscaNome(ActionEvent event) {
-        Cliente obj = new Cliente();
-        createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaNomeForm.fxml", (BuscaNomeForm controller) -> {
-            controller.subscribeController(this);
-            controller.setClienteService(clienteService);
-            controller.subscribeDataChangeListener(this);
-        });
-    }
+//    @FXML
+//    public void onBtBuscaCpf(ActionEvent event) {
+//        Cliente obj = new Cliente();
+//        createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaCPFForm.fxml", (BuscaCpfForm controller) -> {
+//            controller.subscribeController(this);
+//            controller.setClienteService(motoClienteService);
+//            controller.subscribeDataChangeListener(this);
+//        });
+//    }
+//
+//    @FXML
+//    public void onBtBuscaNome(ActionEvent event) {
+//        Cliente obj = new Cliente();
+//        createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaNomeForm.fxml", (BuscaNomeForm controller) -> {
+//            controller.subscribeController(this);
+//            controller.setClienteService(motoClienteService);
+//            controller.subscribeDataChangeListener(this);
+//        });
+//    }
 
     @FXML
     public void onBtLimpaBusca(ActionEvent event) {
         this.busca = false;
         this.listaBusca = null;
         updateTableView();
-    }
-
-    public void setListaBusca(List<Cliente> listaBusca) {
-        this.listaBusca = listaBusca;
-    }
-
-    public void setBusca(Boolean busca) {
-        this.busca = busca;
     }
 
     private synchronized <T> void createDialogFormBusca(Stage parentStage, String path, Consumer<T> initializationAction) {
@@ -145,10 +149,11 @@ public class ListaClientesController implements Initializable, DataChangeListene
 
     private void initializeNodes() {
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnName.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tableColumnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-        tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+        tableColumnPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
+        tableColumnAno.setCellValueFactory(new PropertyValueFactory<>("ano"));
+        tableColumnModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        tableColumnMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+        tableColumnDono.setCellValueFactory(new PropertyValueFactory<>("dono"));
 
         Stage stage = (Stage) HelloApplication.getMainScene().getWindow();
         tableViewClientes.prefHeightProperty().bind(stage.heightProperty());
@@ -157,32 +162,43 @@ public class ListaClientesController implements Initializable, DataChangeListene
     }
 
     public void updateTableView() {
-        if(clienteService == null)
+        if(motoClienteService == null)
             throw new IllegalStateException("Marca service is null");
-        List<Cliente> list;
+        List<MotoCliente> list;
 
         if(busca && listaBusca != null){
             list = listaBusca;
         }else{
-            list = clienteService.findAll();
+            list = motoClienteService.findAll();
         }
 
-        ObservableList<Cliente> obsList = FXCollections.observableArrayList(list);
+        List<MotoClienteDTO> listDTO = list.stream().map(moto ->
+                MotoClienteDTO.builder()
+                        .id(moto.getId())
+                        .placa(moto.getPlaca())
+                        .ano(moto.getAno())
+                        .modelo(moto.getModelo())
+                        .marca(moto.getModelo().getMarca())
+                        .dono(moto.getCliente())
+                        .build()
+        ).toList();
+
+        ObservableList<MotoClienteDTO> obsList = FXCollections.observableArrayList(listDTO);
         tableViewClientes.setItems(obsList);
         initEditButtons();
         deleteButtons();
     }
 
 
-    private void createDialogForm(Cliente obj, Stage parentStage, String path) {
+    private void createDialogForm(MotoClienteDTO obj, Stage parentStage, String path) {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Pane pane = (Pane) loader.load();
 
-            ClienteFormController controller = loader.getController();
-            controller.setCliente(obj);
-            controller.subscribeDataChangeListener(this);
-            controller.updateFormData();
+//            MotoClienteFormController controller = loader.getController();
+//            controller.setCliente(obj);
+//            controller.subscribeDataChangeListener(this);
+//            controller.updateFormData();
 
 
             Stage dialogStage = new Stage();
@@ -208,11 +224,11 @@ public class ListaClientesController implements Initializable, DataChangeListene
 
     private void initEditButtons() {
         tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnEDIT.setCellFactory(param -> new TableCell<Cliente, Cliente>() {
+        tableColumnEDIT.setCellFactory(param -> new TableCell<MotoClienteDTO, MotoClienteDTO>() {
             private final Button button = new Button("edit");
 
             @Override
-            protected void updateItem(Cliente obj, boolean empty) {
+            protected void updateItem(MotoClienteDTO obj, boolean empty) {
                 super.updateItem(obj, empty);
 
                 if (obj == null) {
@@ -233,11 +249,11 @@ public class ListaClientesController implements Initializable, DataChangeListene
 
     private void deleteButtons() {
         tableColumnDELETE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnDELETE.setCellFactory(param -> new TableCell<Cliente, Cliente>() {
+        tableColumnDELETE.setCellFactory(param -> new TableCell<MotoClienteDTO, MotoClienteDTO>() {
             private final Button button = new Button("Delete");
 
             @Override
-            protected void updateItem(Cliente obj, boolean empty) {
+            protected void updateItem(MotoClienteDTO obj, boolean empty) {
                 super.updateItem(obj, empty);
 
                 if (obj == null) {
@@ -245,18 +261,20 @@ public class ListaClientesController implements Initializable, DataChangeListene
                     return;
                 }
 
+                MotoCliente moto = motoClienteService.findById(obj.getId());
+
                 setGraphic(button);
-                button.setOnAction(event -> deleteAction(obj));
+                button.setOnAction(event -> deleteAction(moto));
             }
 
         });
     }
 
-    private void deleteAction(Cliente obj) {
+    private void deleteAction(MotoCliente obj) {
         try {
             Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
             if(result.isPresent() && result.get() == ButtonType.OK){
-                clienteService.delete(obj);
+                motoClienteService.delete(obj);
             }
             updateTableView();
 
@@ -265,11 +283,5 @@ public class ListaClientesController implements Initializable, DataChangeListene
         }
 
     }
-
-    public void setClienteService(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
-
-
 
 }

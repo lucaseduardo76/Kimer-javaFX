@@ -1,7 +1,7 @@
 package com.workshop.model.service;
 
-import com.workshop.model.dao.ClienteDao;
-import com.workshop.model.dao.DaoFactory;
+import com.workshop.model.dao.inter.ClienteDao;
+import com.workshop.model.dao.factory.DaoFactory;
 import com.workshop.model.entities.Cliente;
 
 
@@ -34,7 +34,11 @@ public class ClienteService {
         return clienteDao.findAll();
     }
 
-    public Cliente findByCpf(String cpf) {
+    public List<Cliente> findByCpf(String cpf) {
         return clienteDao.findByCpf(cpf);
+    }
+
+    public List<Cliente> findByName(String nome) {
+        return clienteDao.findByName(nome);
     }
 }

@@ -2,10 +2,9 @@ package com.workshop.kimer;
 
 import com.workshop.db.DbIntegrityException;
 import com.workshop.demo.HelloApplication;
-import com.workshop.kimer.listeners.DataChangeListener;
-import com.workshop.kimer.util.Alerts;
-import com.workshop.kimer.util.Utils;
-import com.workshop.model.entities.Marca;
+import com.workshop.listeners.DataChangeListener;
+import com.workshop.util.Alerts;
+import com.workshop.util.Utils;
 import com.workshop.model.entities.Modelo;
 import com.workshop.model.service.ModeloService;
 import javafx.beans.property.ReadOnlyObjectWrapper;

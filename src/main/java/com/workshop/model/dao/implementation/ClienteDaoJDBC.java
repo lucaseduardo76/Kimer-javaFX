@@ -1,15 +1,11 @@
-package com.workshop.model.dao.impl;
+package com.workshop.model.dao.implementation;
 
 import com.workshop.db.DB;
 import com.workshop.db.DbException;
 import com.workshop.db.DbIntegrityException;
-import com.workshop.kimer.util.Utils;
-import com.workshop.model.dao.ClienteDao;
-import com.workshop.model.dao.DaoFactory;
-import com.workshop.model.dao.MarcaDao;
+import com.workshop.util.Utils;
+import com.workshop.model.dao.inter.ClienteDao;
 import com.workshop.model.entities.Cliente;
-import com.workshop.model.entities.Modelo;
-import jdk.jshell.execution.Util;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -84,24 +80,60 @@ public class ClienteDaoJDBC implements ClienteDao {
     }
 
     @Override
-    public Cliente findByCpf(String cpf) {
+    public List<Cliente> findByCpf(String cpf) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT * FROM cliente WHERE cpf = ?");
-            st.setString(1, cpf);
+                    "SELECT * FROM cliente where cpf LIKE ? order by id");
+
+            st.setString(1, cpf +"%");
             rs = st.executeQuery();
-            if (rs.next()) {
+
+            List<Cliente> list = new ArrayList<>();
+
+            while (rs.next()) {
                 Cliente obj = new Cliente();
                 obj.setId(rs.getInt("id"));
                 obj.setNome(rs.getString("nome"));
                 obj.setEmail(rs.getString("email"));
-                obj.setTelefone(rs.getString("telefone"));
-                obj.setCpf(rs.getString("cpf"));
-                return obj;
+                obj.setTelefone(Utils.formatarTelefone(rs.getString("telefone")));
+                obj.setCpf(Utils.formatarCPF(rs.getString("cpf")));
+                list.add(obj);
             }
-            return null;
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    @Override
+    public List<Cliente> findByName(String nome) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM cliente where nome LIKE ? order by id");
+
+            st.setString(1, nome +"%");
+            rs = st.executeQuery();
+
+            List<Cliente> list = new ArrayList<>();
+            while (rs.next()) {
+                Cliente obj = new Cliente();
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setEmail(rs.getString("email"));
+                obj.setTelefone(Utils.formatarTelefone(rs.getString("telefone")));
+                obj.setCpf(Utils.formatarCPF(rs.getString("cpf")));
+                list.add(obj);
+            }
+            return list;
         }
         catch (SQLException e) {
             throw new DbException(e.getMessage());

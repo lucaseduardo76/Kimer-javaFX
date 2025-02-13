@@ -1,43 +1,36 @@
-package com.workshop.model.dao.impl;
+package com.workshop.model.dao.implementation;
 
 import com.workshop.db.DB;
 import com.workshop.db.DbException;
 import com.workshop.db.DbIntegrityException;
-import com.workshop.kimer.util.Utils;
-import com.workshop.model.dao.DaoFactory;
-import com.workshop.model.dao.MarcaDao;
-import com.workshop.model.dao.ModeloDao;
+import com.workshop.util.Utils;
+import com.workshop.model.dao.inter.MarcaDao;
 import com.workshop.model.entities.Marca;
-import com.workshop.model.entities.Modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModeloDaoJDBC implements ModeloDao {
-    private final Connection conn;
-    private final MarcaDao marcaDao;
+public class MarcaDaoJDBC implements MarcaDao {
+    private Connection conn;
 
-    public ModeloDaoJDBC(Connection conn) {
+    public MarcaDaoJDBC(Connection conn) {
         this.conn = conn;
-        this.marcaDao = DaoFactory.createMarcaDao();
     }
 
     @Override
-    public Modelo findById(Integer id) {
+    public Marca findById(Integer id) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT * FROM modelo WHERE Id = ?");
+                    "SELECT * FROM marca WHERE Id = ?");
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                Modelo obj = new Modelo();
+                Marca obj = new Marca();
                 obj.setId(rs.getInt("Id"));
-                obj.setModelo(rs.getString("Modelo"));
-                obj.setCilindrada(rs.getString("Cilindrada"));
-                obj.setMarca(marcaDao.findById(rs.getInt("Marca")));
+                obj.setNome(rs.getString("Nome"));
                 return obj;
             }
             return null;
@@ -52,22 +45,20 @@ public class ModeloDaoJDBC implements ModeloDao {
     }
 
     @Override
-    public List<Modelo> findAll() {
+    public List<Marca> findAll() {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT * FROM modelo ORDER BY id");
+                    "SELECT * FROM marca ORDER BY id");
             rs = st.executeQuery();
 
-            List<Modelo> list = new ArrayList<>();
+            List<Marca> list = new ArrayList<>();
 
             while (rs.next()) {
-                Modelo obj = new Modelo();
+                Marca obj = new Marca();
                 obj.setId(rs.getInt("Id"));
-                obj.setModelo(rs.getString("Modelo"));
-                obj.setCilindrada(rs.getString("Cilindrada"));
-                obj.setMarca(marcaDao.findById(rs.getInt("Marca_id")));
+                obj.setNome(Utils.capitalizeWords(rs.getString("Nome")));
                 list.add(obj);
             }
             return list;
@@ -82,19 +73,43 @@ public class ModeloDaoJDBC implements ModeloDao {
     }
 
     @Override
-    public void insert(Modelo obj) {
+    public Marca findByName(String name) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM marca WHERE Nome = ?");
+            st.setString(1, name);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                Marca obj = new Marca();
+                obj.setId(rs.getInt("Id"));
+                obj.setNome(rs.getString("Nome"));
+                return obj;
+            }
+            return null;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    @Override
+    public void insert(Marca obj) {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO modelo " +
-                            "(Modelo, Cilindrada, Marca_id) " +
+                    "INSERT INTO marca " +
+                            "(Nome) " +
                             "VALUES " +
-                            "(?, ?, ?)",
+                            "(?)",
                     Statement.RETURN_GENERATED_KEYS);
 
-            st.setString(1, obj.getModelo());
-            st.setString(2, obj.getCilindrada());
-            st.setInt(3, obj.getMarca().getId());
+            st.setString(1, obj.getNome());
 
             int rowsAffected = st.executeUpdate();
 
@@ -118,22 +133,16 @@ public class ModeloDaoJDBC implements ModeloDao {
     }
 
     @Override
-    public void update(Modelo obj) {
+    public void update(Marca obj) {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "UPDATE modelo " +
-                            "SET Modelo = ?, " +
-                            "Cilindrada = ?, " +
-                            "Marca_id = ? " +
-                            "WHERE Id = ?"
-            );
+                    "UPDATE marca " +
+                            "SET Nome = ? " +
+                            "WHERE Id = ?");
 
-
-            st.setString(1, obj.getModelo());
-            st.setString(2, obj.getCilindrada());
-            st.setInt(3, obj.getMarca().getId());
-            st.setInt(4, obj.getId());
+            st.setString(1, obj.getNome());
+            st.setInt(2, obj.getId());
 
             st.executeUpdate();
         }
@@ -150,7 +159,7 @@ public class ModeloDaoJDBC implements ModeloDao {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "DELETE FROM modelo WHERE Id = ?");
+                    "DELETE FROM marca WHERE Id = ?");
 
             st.setInt(1, id);
             st.executeUpdate();

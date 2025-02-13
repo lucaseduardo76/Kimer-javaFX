@@ -1,8 +1,8 @@
 package com.workshop.model.service;
 
 import com.workshop.exception.UsuarioNull;
-import com.workshop.model.dao.DaoFactory;
-import com.workshop.model.dao.UsuarioInterface;
+import com.workshop.model.dao.factory.DaoFactory;
+import com.workshop.model.dao.inter.UsuarioInterface;
 import com.workshop.model.entities.Usuario;
 
 public class UsuarioService {

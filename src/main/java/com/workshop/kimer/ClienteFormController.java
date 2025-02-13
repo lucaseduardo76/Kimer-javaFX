@@ -1,14 +1,12 @@
 package com.workshop.kimer;
 
 import com.workshop.db.DbException;
-import com.workshop.kimer.listeners.DataChangeListener;
-import com.workshop.kimer.util.Alerts;
-import com.workshop.kimer.util.Constraints;
-import com.workshop.kimer.util.Utils;
+import com.workshop.listeners.DataChangeListener;
+import com.workshop.util.Alerts;
+import com.workshop.util.Constraints;
+import com.workshop.util.Utils;
 import com.workshop.model.entities.Cliente;
-import com.workshop.model.entities.Marca;
 import com.workshop.model.service.ClienteService;
-import com.workshop.model.service.MarcaService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -73,9 +71,9 @@ public class ClienteFormController implements Initializable {
     public void onBtSaveAction(ActionEvent event) {
         try {
             String name = txtName.getText();
-            String cpf = txtCpf.getText();
+            String cpf = Utils.extractDigits(txtCpf.getText());
             String email = txtEmail.getText();
-            String telefone = txtTelefone.getText();
+            String telefone = Utils.extractDigits(txtTelefone.getText());
 
             try {
                 Utils.formatarCPF(cpf);

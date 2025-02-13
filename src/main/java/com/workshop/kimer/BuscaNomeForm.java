@@ -1,13 +1,11 @@
 package com.workshop.kimer;
 
 import com.workshop.db.DbException;
-
 import com.workshop.listeners.DataChangeListener;
 import com.workshop.util.Alerts;
 import com.workshop.util.Constraints;
 import com.workshop.util.Utils;
-import com.workshop.model.entities.Marca;
-import com.workshop.model.service.MarcaService;
+import com.workshop.model.service.ClienteService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,23 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MarcaFormController implements Initializable {
-
-    private Marca marca;
-
-    private final MarcaService marcaService;
-
+public class BuscaNomeForm implements Initializable {
     private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
-    public MarcaFormController() {
-        this.marcaService = new MarcaService();
-    }
+    private ListaClientesController listaClientesController;
+
+    private ClienteService clienteService;
+
+
 
     @FXML
-    private TextField txtId;
-
-    @FXML
-    private TextField txtName;
+    private TextField txtNome;
 
     @FXML
     private Label labelErrorName;
@@ -46,31 +38,30 @@ public class MarcaFormController implements Initializable {
     private Button btCancel;
 
     @FXML
-    private Button btSave;
+    private Button btBusca;
 
 
-
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
 
     public void subscribeDataChangeListener(DataChangeListener dataChangeListener) {
         this.dataChangeListeners.add(dataChangeListener);
     }
 
+    public void subscribeController(ListaClientesController listaClientesController) {
+        this.listaClientesController = listaClientesController;
+    }
+
     @FXML
-    public void onBtSaveAction(ActionEvent event) {
+    public void onBtBuscaAction(ActionEvent event) {
         try {
-            String name = txtName.getText();
-            Marca newMarca = new Marca();
-            newMarca.setId(Utils.tryParseInt(txtId.getText()));
-            newMarca.setNome(name);
-            marcaService.insertOrUpdateMarca(newMarca);
+
+            String nome = txtNome.getText();
+            listaClientesController.setListaBusca(clienteService.findByName(nome));
+            listaClientesController.setBusca(true);
+
             notifyDataChangeListeners();
             Utils.currentStage(event).close();
-        }
-        catch (DbException e) {
-            Alerts.showAlert("Error Saving Object", null, e.getMessage(), Alert.AlertType.ERROR);
+        } catch (DbException e) {
+            Alerts.showAlert("Error Searching Object", null, e.getMessage(), Alert.AlertType.ERROR);
         }
 
     }
@@ -93,15 +84,11 @@ public class MarcaFormController implements Initializable {
         initializeNodes();
     }
 
-    private void initializeNodes(){
-        Constraints.setTextFieldInteger(txtId);
-        Constraints.setTextFieldMaxLength(txtName, 30);
+    private void initializeNodes() {
+        Constraints.setTextFieldMaxLength(txtNome, 50);
     }
 
-    public void updateFormData() {
-        if (marca == null)
-            throw new IllegalStateException("department is null");
-        this.txtId.setText(String.valueOf(marca.getId()));
-        this.txtName.setText(marca.getNome());
+    public void setClienteService(ClienteService clienteService) {
+        this.clienteService = clienteService;
     }
 }

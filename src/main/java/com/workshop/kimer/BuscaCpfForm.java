@@ -1,11 +1,10 @@
 package com.workshop.kimer;
 
 import com.workshop.db.DbException;
-import com.workshop.kimer.listeners.DataChangeListener;
-import com.workshop.kimer.util.Alerts;
-import com.workshop.kimer.util.Constraints;
-import com.workshop.kimer.util.Utils;
-import com.workshop.model.entities.Cliente;
+import com.workshop.listeners.DataChangeListener;
+import com.workshop.util.Alerts;
+import com.workshop.util.Constraints;
+import com.workshop.util.Utils;
 import com.workshop.model.service.ClienteService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,11 +23,11 @@ public class BuscaCpfForm implements Initializable {
 
     private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
-    private final ClienteService clienteService;
+    private ListaClientesController listaClientesController;
 
-    public BuscaCpfForm(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
+    private ClienteService clienteService;
+
+
 
     @FXML
     private TextField txtCpf;
@@ -48,13 +47,18 @@ public class BuscaCpfForm implements Initializable {
         this.dataChangeListeners.add(dataChangeListener);
     }
 
+    public void subscribeController(ListaClientesController listaClientesController) {
+        this.listaClientesController = listaClientesController;
+    }
+
     @FXML
     public void onBtBuscaAction(ActionEvent event) {
         try {
-            String cpf = txtCpf.getText();
+            String cpf = Utils.extractDigits(txtCpf.getText());
 
-            Cliente cliente = clienteService.findByCpf(cpf);
 
+            listaClientesController.setListaBusca(clienteService.findByCpf(cpf));
+            listaClientesController.setBusca(true);
 
             notifyDataChangeListeners();
             Utils.currentStage(event).close();
@@ -86,6 +90,7 @@ public class BuscaCpfForm implements Initializable {
         Constraints.setTextFieldMaxLength(txtCpf, 11);
     }
 
-
-
+    public void setClienteService(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
 }

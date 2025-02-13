@@ -1,8 +1,7 @@
-package com.workshop.model.dao;
+package com.workshop.model.dao.inter;
 
 
 
-import com.workshop.model.entities.Marca;
 import com.workshop.model.entities.Modelo;
 
 import java.util.List;

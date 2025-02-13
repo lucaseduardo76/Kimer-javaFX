@@ -1,4 +1,4 @@
-package com.workshop.model.dao;
+package com.workshop.model.dao.inter;
 
 
 

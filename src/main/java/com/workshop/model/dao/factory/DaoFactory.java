@@ -1,11 +1,12 @@
-package com.workshop.model.dao;
+package com.workshop.model.dao.factory;
 
 
 import com.workshop.db.DB;
-import com.workshop.model.dao.impl.ClienteDaoJDBC;
-import com.workshop.model.dao.impl.MarcaDaoJDBC;
-import com.workshop.model.dao.impl.ModeloDaoJDBC;
-import com.workshop.model.dao.impl.UsuarioDaoJDBC;
+import com.workshop.model.dao.implementation.*;
+import com.workshop.model.dao.inter.ClienteDao;
+import com.workshop.model.dao.inter.MarcaDao;
+import com.workshop.model.dao.inter.ModeloDao;
+import com.workshop.model.dao.inter.UsuarioInterface;
 
 public class DaoFactory {
 
@@ -22,4 +23,6 @@ public class DaoFactory {
 	}
 
 	public static ClienteDao createClienteDao() {return new ClienteDaoJDBC(DB.getConnection());}
+
+	public static MotoClienteJDBC createMotoClienteDao() {return new MotoClienteJDBC(DB.getConnection());}
 }

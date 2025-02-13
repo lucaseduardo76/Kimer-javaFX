@@ -1,4 +1,4 @@
-package com.workshop.kimer.util;
+package com.workshop.util;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -67,6 +67,11 @@ public class Utils {
             throw new RuntimeException("E-mail inválido: formato incorreto.");
         }
     }
+
+    public static String extractDigits(String input) {
+        return input.replaceAll("[^0-9]", "");
+    }
+
 
 
 }

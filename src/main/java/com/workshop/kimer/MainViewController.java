@@ -1,7 +1,9 @@
 package com.workshop.kimer;
 
 import com.workshop.demo.HelloApplication;
-import com.workshop.kimer.util.Alerts;
+import com.workshop.model.service.MotoClienteService;
+import com.workshop.util.Alerts;
+import com.workshop.model.entities.MotoCliente;
 import com.workshop.model.service.ClienteService;
 import com.workshop.model.service.MarcaService;
 import com.workshop.model.service.ModeloService;
@@ -84,7 +86,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void onBtListaMotoCliente() {
-        // Implementação do método
+        loadView("/com/workshop/kimer/listaMotoCliente.fxml", (ListaMotoClienteController listaController) -> {
+        listaController.setMotoClienteService(new MotoClienteService());
+        listaController.updateTableView();
+    });
     }
 
     @FXML
@@ -117,7 +122,7 @@ public class MainViewController implements Initializable {
         try {
             Node newView = loader.load();
 
-            // Substituir apenas a área de conteúdo, mantendo o MenuBar
+
             contentArea.getChildren().clear();
             contentArea.getChildren().add(newView);
 
@@ -126,26 +131,6 @@ public class MainViewController implements Initializable {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
-//    private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//        try {
-//            Node newView = loader.load();
-//            contentArea.getChildren().clear();
-//            contentArea.getChildren().add(newView);
-//
-//            // Obtendo o controlador
-//            T controller = loader.getController();
-//            if (controller != null) {
-//                initializingAction.accept(controller);
-//            } else {
-//                Alerts.showAlert("Error", "Controller is null", "Não foi possível carregar o controlador para " + absoluteName, Alert.AlertType.ERROR);
-//            }
-//
-//        } catch (IOException e) {
-//            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
-//        }
-//    }
 
 
     private synchronized void loadFullView(String absoluteName) {

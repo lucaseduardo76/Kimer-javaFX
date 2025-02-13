@@ -1,10 +1,10 @@
-package com.workshop.model.dao.impl;
+package com.workshop.model.dao.implementation;
 
 
 
 import com.workshop.db.DB;
 import com.workshop.db.DbException;
-import com.workshop.model.dao.UsuarioInterface;
+import com.workshop.model.dao.inter.UsuarioInterface;
 import com.workshop.model.entities.Usuario;
 
 import java.sql.*;

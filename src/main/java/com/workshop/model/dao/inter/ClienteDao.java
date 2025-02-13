@@ -1,4 +1,4 @@
-package com.workshop.model.dao;
+package com.workshop.model.dao.inter;
 
 import com.workshop.model.entities.Cliente;
 
@@ -12,5 +12,7 @@ public interface ClienteDao {
     Cliente findById(Integer id);
     List<Cliente> findAll();
 
-    Cliente findByCpf(String cpf);
+    List<Cliente> findByCpf(String cpf);
+
+    List<Cliente> findByName(String nome);
 }
