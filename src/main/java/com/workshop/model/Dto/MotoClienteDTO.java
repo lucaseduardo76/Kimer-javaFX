@@ -3,10 +3,7 @@ package com.workshop.model.Dto;
 import com.workshop.model.entities.Cliente;
 import com.workshop.model.entities.Marca;
 import com.workshop.model.entities.Modelo;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 
-@Builder
 public class MotoClienteDTO {
     private Integer id;
     private String placa;

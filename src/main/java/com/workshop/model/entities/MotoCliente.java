@@ -1,5 +1,6 @@
 package com.workshop.model.entities;
 
+
 public class MotoCliente {
 
     private Integer id;
@@ -8,16 +9,6 @@ public class MotoCliente {
     private Modelo modelo;
     private Cliente cliente;
 
-    public MotoCliente() {}
-
-
-    public MotoCliente(Integer id, String placa, Integer ano, Modelo modelo, Cliente cliente) {
-        this.id = id;
-        this.placa = placa;
-        this.ano = ano;
-        this.modelo = modelo;
-        this.cliente = cliente;
-    }
 
     public Integer getId() {
         return id;

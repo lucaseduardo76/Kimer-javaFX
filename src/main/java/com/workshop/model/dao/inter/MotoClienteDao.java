@@ -1,6 +1,8 @@
 package com.workshop.model.dao.inter;
 
 
+import com.workshop.model.entities.MotoCliente;
+
 import java.util.List;
 
 public interface MotoClienteDao {
@@ -9,4 +11,6 @@ public interface MotoClienteDao {
     void deleteById(Integer id);
     com.workshop.model.entities.MotoCliente findById(Integer id);
     List<com.workshop.model.entities.MotoCliente> findAll();
+
+    List<MotoCliente> findByClienteId(int id);
 }

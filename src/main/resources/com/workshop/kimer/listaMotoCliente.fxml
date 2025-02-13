@@ -21,8 +21,21 @@
         </Label>
         <ToolBar prefHeight="40.0" prefWidth="200.0">
             <items>
-                <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
+                <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Novo" />
+                <ToolBar prefHeight="40.0" prefWidth="707.0">
+                    <items>
+                        <Button fx:id="btLimpaBusca" mnemonicParsing="false" onAction="#onBtLimpaBusca" text="Limpar Busca" />
+                        <Button fx:id="btBuscaNome" mnemonicParsing="false" onAction="#onBtBuscaNome" text="Buscar por Nome Dono" />
+                        <Button fx:id="btBuscaCpf" mnemonicParsing="false" onAction="#onBtBuscaPorCpf" text="Buscar por CPF" />
+                    </items>
+                    <padding>
+                        <Insets left="370.0" />
+                    </padding>
+                </ToolBar>
             </items>
+            <padding>
+                <Insets left="10.0" />
+            </padding>
         </ToolBar>
         <TableView fx:id="tableViewClientes" prefHeight="633.0" prefWidth="772.0">
             <columns>

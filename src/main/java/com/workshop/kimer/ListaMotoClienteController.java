@@ -25,7 +25,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import lombok.Setter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,14 +34,13 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-@Setter
+
 public class ListaMotoClienteController implements Initializable, DataChangeListener {
 
     private Boolean busca;
 
     private List<MotoCliente> listaBusca;
 
-    @Setter
     private MotoClienteService motoClienteService;
 
     public ListaMotoClienteController() {
@@ -90,28 +88,28 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
 
     @FXML
     public void onBtNewAction(ActionEvent event) {
-        MotoClienteDTO obj = MotoClienteDTO.builder().build();
-        createDialogForm(obj, Utils.currentStage(event), "/com/workshop/kimer/ClienteForm.fxml");
+        MotoClienteDTO obj = new MotoClienteDTO();
+        createDialogForm(obj, Utils.currentStage(event), "/com/workshop/kimer/MotoClienteForm.fxml");
     }
-//    @FXML
-//    public void onBtBuscaCpf(ActionEvent event) {
-//        Cliente obj = new Cliente();
-//        createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaCPFForm.fxml", (BuscaCpfForm controller) -> {
-//            controller.subscribeController(this);
-//            controller.setClienteService(motoClienteService);
-//            controller.subscribeDataChangeListener(this);
-//        });
-//    }
-//
-//    @FXML
-//    public void onBtBuscaNome(ActionEvent event) {
-//        Cliente obj = new Cliente();
-//        createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaNomeForm.fxml", (BuscaNomeForm controller) -> {
-//            controller.subscribeController(this);
-//            controller.setClienteService(motoClienteService);
-//            controller.subscribeDataChangeListener(this);
-//        });
-//    }
+    @FXML
+    public void onBtBuscaPorCpf(ActionEvent event) {
+        Cliente obj = new Cliente();
+        createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaMotoCpfForm.fxml", (BuscaMotoCpfController controller) -> {
+            controller.subscribeController(this);
+            controller.setMotoClienteService(motoClienteService);
+            controller.subscribeDataChangeListener(this);
+        });
+    }
+
+    @FXML
+    public void onBtBuscaNome(ActionEvent event) {
+        Cliente obj = new Cliente();
+        createDialogFormBusca( Utils.currentStage(event), "/com/workshop/kimer/BuscaMotoNomeForm.fxml", (BuscaMotoNomeController controller) -> {
+            controller.subscribeController(this);
+            controller.setMotoClienteService(motoClienteService);
+            controller.subscribeDataChangeListener(this);
+        });
+    }
 
     @FXML
     public void onBtLimpaBusca(ActionEvent event) {
@@ -172,16 +170,17 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
             list = motoClienteService.findAll();
         }
 
-        List<MotoClienteDTO> listDTO = list.stream().map(moto ->
-                MotoClienteDTO.builder()
-                        .id(moto.getId())
-                        .placa(moto.getPlaca())
-                        .ano(moto.getAno())
-                        .modelo(moto.getModelo())
-                        .marca(moto.getModelo().getMarca())
-                        .dono(moto.getCliente())
-                        .build()
-        ).toList();
+        List<MotoClienteDTO> listDTO = list.stream().map(moto ->{
+                MotoClienteDTO dto = new MotoClienteDTO();
+                dto.setId(moto.getId());
+                dto.setPlaca(moto.getPlaca());
+                dto.setAno(moto.getAno());
+                dto.setModelo(moto.getModelo());
+                dto.setDono(moto.getCliente());
+                dto.setMarca(moto.getModelo().getMarca());
+                return dto;
+                }).toList();
+
 
         ObservableList<MotoClienteDTO> obsList = FXCollections.observableArrayList(listDTO);
         tableViewClientes.setItems(obsList);
@@ -195,10 +194,18 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Pane pane = (Pane) loader.load();
 
-//            MotoClienteFormController controller = loader.getController();
-//            controller.setCliente(obj);
-//            controller.subscribeDataChangeListener(this);
-//            controller.updateFormData();
+            MotoClienteFormController controller = loader.getController();
+
+            MotoCliente dto = new MotoCliente();
+            dto.setId(obj.getId());
+            dto.setPlaca(obj.getPlaca());
+            dto.setAno(obj.getAno());
+            dto.setModelo(obj.getModelo());
+            dto.setCliente(obj.getDono());
+
+            controller.setMotoCliente(dto);
+            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
 
 
             Stage dialogStage = new Stage();
@@ -239,7 +246,7 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
                 setGraphic(button);
                 button.setOnAction(
                         event -> createDialogForm(
-                                obj, Utils.currentStage(event), "/com/workshop/kimer/ClienteForm.fxml"));
+                                obj, Utils.currentStage(event), "/com/workshop/kimer/MotoClienteForm.fxml"));
             }
         });
     }
@@ -284,4 +291,15 @@ public class ListaMotoClienteController implements Initializable, DataChangeList
 
     }
 
+    public void setMotoClienteService(MotoClienteService motoClienteService) {
+        this.motoClienteService = motoClienteService;
+    }
+
+    public void setListaBusca(List<MotoCliente> listaBusca) {
+        this.listaBusca = listaBusca;
+    }
+
+    public void setBusca(boolean busca) {
+        this.busca = busca;
+    }
 }

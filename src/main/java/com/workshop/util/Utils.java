@@ -73,5 +73,23 @@ public class Utils {
     }
 
 
+    public static String formatarPlaca(String placa) {
+        if (placa == null || placa.length() != 7) {
+            throw new IllegalArgumentException("Placa Inválida");
+        }
+
+        // Converte para maiúsculas e insere o hífen após os 3 primeiros caracteres
+        return placa.substring(0, 3).toUpperCase() + "-" + placa.substring(3);
+    }
+
+
+    public static String removerCaracteresEspeciais(String texto) {
+        if (texto == null) {
+            return null;
+        }
+        return texto.replaceAll("[^a-zA-Z0-9]", "");
+    }
+
+
 
 }

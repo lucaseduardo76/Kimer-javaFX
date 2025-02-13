@@ -25,7 +25,7 @@
             <ToolBar prefHeight="40.0" prefWidth="707.0">
               <items>
                   <Button fx:id="btLimpaBusca" mnemonicParsing="false" onAction="#onBtLimpaBusca" text="Limpar Busca" />
-                <Button fx:id="btBuscaNome" mnemonicParsing="false" onAction="#onBtBuscaNome" text="Buscar por  Nome" />
+                <Button fx:id="btBuscaNome" mnemonicParsing="false" onAction="#onBtBuscaNome" text="Buscar por Nome" />
                 <Button fx:id="btBuscaCpf" mnemonicParsing="false" onAction="#onBtBuscaCpf" text="Buscar por CPF" />
               </items>
                <padding>
