@@ -11,7 +11,7 @@
 
 <VBox prefHeight="635.0" prefWidth="925.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.ListaMotoClienteController">
     <children>
-        <Label text="Lista de Clientes Cadastrados">
+        <Label text="Lista Motos de Cliente Cadastrados">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>

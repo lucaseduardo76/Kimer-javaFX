@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="167.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.MarcaFormController">
+<AnchorPane prefHeight="167.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workshop.kimer.PecaCadastradasFormController">
     <children>
         <GridPane layoutX="14.0" layoutY="14.0" prefHeight="147.0" prefWidth="858.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
             <columnConstraints>

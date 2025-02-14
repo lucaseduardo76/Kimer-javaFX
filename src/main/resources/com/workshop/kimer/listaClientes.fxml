@@ -22,32 +22,32 @@
         <ToolBar prefHeight="40.0" prefWidth="200.0">
             <items>
                 <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Novo" />
-            <ToolBar prefHeight="40.0" prefWidth="707.0">
-              <items>
-                  <Button fx:id="btLimpaBusca" mnemonicParsing="false" onAction="#onBtLimpaBusca" text="Limpar Busca" />
-                <Button fx:id="btBuscaNome" mnemonicParsing="false" onAction="#onBtBuscaNome" text="Buscar por Nome" />
-                <Button fx:id="btBuscaCpf" mnemonicParsing="false" onAction="#onBtBuscaCpf" text="Buscar por CPF" />
-              </items>
-               <padding>
-                  <Insets left="400.0" />
-               </padding>
-            </ToolBar>
+                <ToolBar prefHeight="40.0" prefWidth="707.0">
+                    <items>
+                        <Button fx:id="btLimpaBusca" mnemonicParsing="false" onAction="#onBtLimpaBusca" text="Limpar Busca" />
+                        <Button fx:id="btBuscaNome" mnemonicParsing="false" onAction="#onBtBuscaNome" text="Buscar por Nome" />
+                        <Button fx:id="btBuscaCpf" mnemonicParsing="false" onAction="#onBtBuscaCpf" text="Buscar por CPF" />
+                    </items>
+                    <padding>
+                        <Insets left="400.0" />
+                    </padding>
+                </ToolBar>
             </items>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
+            <padding>
+                <Insets left="10.0" />
+            </padding>
         </ToolBar>
         <TableView fx:id="tableViewClientes" prefHeight="548.0" prefWidth="772.0">
             <columns>
                 <TableColumn fx:id="tableColumnId" maxWidth="500.0" prefWidth="50.0" text="id" />
                 <TableColumn fx:id="tableColumnName" minWidth="68.0" prefWidth="150.0" text="nome" />
-            <TableColumn fx:id="tableColumnCpf" minWidth="68.0" prefWidth="150.0" text="cpf" />
-            <TableColumn fx:id="tableColumnEmail" minWidth="68.0" prefWidth="150.0" text="email" />
-            <TableColumn fx:id="tableColumnTelefone" maxWidth="200.0" minWidth="68.0" prefWidth="150.0" text="telefone" />
+                <TableColumn fx:id="tableColumnCpf" minWidth="68.0" prefWidth="150.0" text="cpf" />
+                <TableColumn fx:id="tableColumnEmail" minWidth="68.0" prefWidth="150.0" text="email" />
+                <TableColumn fx:id="tableColumnTelefone" maxWidth="200.0" minWidth="68.0" prefWidth="150.0" text="telefone" />
                 <TableColumn fx:id="tableColumnEDIT" minWidth="43.0" prefWidth="60.0" text="editar" />
                 <TableColumn fx:id="tableColumnDELETE" minWidth="49.0" prefWidth="60.0" text="deletar" />
 
-                        </columns>
+            </columns>
         </TableView>
     </children>
 </VBox>

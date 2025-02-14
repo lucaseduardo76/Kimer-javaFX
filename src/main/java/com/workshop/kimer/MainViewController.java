@@ -1,12 +1,9 @@
 package com.workshop.kimer;
 
 import com.workshop.demo.HelloApplication;
-import com.workshop.model.service.MotoClienteService;
+import com.workshop.model.service.*;
 import com.workshop.util.Alerts;
 import com.workshop.model.entities.MotoCliente;
-import com.workshop.model.service.ClienteService;
-import com.workshop.model.service.MarcaService;
-import com.workshop.model.service.ModeloService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -87,14 +84,17 @@ public class MainViewController implements Initializable {
     @FXML
     private void onBtListaMotoCliente() {
         loadView("/com/workshop/kimer/listaMotoCliente.fxml", (ListaMotoClienteController listaController) -> {
-        listaController.setMotoClienteService(new MotoClienteService());
-        listaController.updateTableView();
-    });
+            listaController.setMotoClienteService(new MotoClienteService());
+            listaController.updateTableView();
+        });
     }
 
     @FXML
     private void onBtListaPecasCadastrada() {
-        // Implementação do método
+        loadView("/com/workshop/kimer/listaPecasCadastradas.fxml", (ListaPecasCadastradasController listaController) -> {
+            listaController.setPecaService(new PecaService());
+            listaController.updateTableView();
+        });
     }
 
     @FXML
