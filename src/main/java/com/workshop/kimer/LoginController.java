@@ -2,6 +2,7 @@ package com.workshop.kimer;
 
 import com.workshop.demo.HelloApplication;
 import com.workshop.exception.UsuarioNull;
+import com.workshop.model.entities.Usuario;
 import com.workshop.util.Alerts;
 import com.workshop.model.service.UsuarioService;
 import javafx.event.ActionEvent;
@@ -41,10 +42,10 @@ public class LoginController implements Initializable {
     public void onLoginButtonAction(ActionEvent event) {
 
         try{
-//            Usuario usuario = new Usuario();
-//            usuario.setUsername(usernameField.getText());
-//            usuario.setSenha(passwordField.getText());
-//            usuarioService.login(usuario);
+            Usuario usuario = new Usuario();
+            usuario.setUsername(usernameField.getText());
+            usuario.setSenha(passwordField.getText());
+            usuarioService.login(usuario);
 
             loadView("/com/workshop/kimer/MainView.fxml", x -> {
             });
