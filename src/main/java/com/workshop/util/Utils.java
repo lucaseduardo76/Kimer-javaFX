@@ -101,6 +101,20 @@ public class Utils {
         return texto.replaceAll("[^a-zA-Z0-9]", "");
     }
 
+    public static Double parseDouble(String value) throws NumberFormatException {
+
+        if (value.isEmpty()) {
+            throw new NumberFormatException("O campo está vazio.");
+        }
+
+        try {
+            return Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Valor inválido: " + value);
+        }
+    }
+
+
 
 
 }

@@ -99,7 +99,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void onBtEstoque() {
-        // Implementação do método
+        loadView("/com/workshop/kimer/Estoque.fxml", (EstoqueController listaController) -> {
+            listaController.setEstoqueService(new EstoqueService());
+            listaController.updateTableView();
+        });
     }
 
     @FXML

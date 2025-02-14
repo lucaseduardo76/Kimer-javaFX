@@ -26,4 +26,8 @@ public class DaoFactory {
     public static PecaDao createPecaDao() {
 		return new PecaDaoJDBC(DB.getConnection());
     }
+
+	public static EstoqueDao createEstoqueDao() {
+		return new EstoqueDaoJDBC(DB.getConnection());
+	}
 }
