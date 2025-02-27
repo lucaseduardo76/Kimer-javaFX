@@ -2,7 +2,7 @@ package com.workshop.model.entities;
 
 import java.util.Objects;
 
-public class Usuario {
+public class       Usuario {
 
     private Integer id;
     private String nome;
